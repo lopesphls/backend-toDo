@@ -55,6 +55,6 @@ export function edit(req, res) {
 export function deletar(req, res) {
   const id = req.params.id;
   const delet = toDo.findIndex((el) => el.id === id);
-    toDo.splice(delet, 1);
+   toDo.splice(delet, 1);
   res.send('Deletado com sucesso');
 }
