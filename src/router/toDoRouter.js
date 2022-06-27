@@ -10,7 +10,6 @@ import {
 
 const router = Router();
 
-
 router.get('/to-do', getAll);
 router.get('/to-do/:id', getOne);
 router.post('/criar', create);
