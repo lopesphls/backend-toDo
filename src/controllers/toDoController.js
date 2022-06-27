@@ -24,7 +24,7 @@ export function getAll(req, res) {
 }
 
 export function getOne(req, res) {
-  const { id } = req.params;
+  const id = req.params.id;
 
   toDo.forEach((el) => {
     if (id === el.id) {
@@ -45,7 +45,7 @@ export function create(req, res) {
 }
 
 export function edit(req, res) {
-  const { id } = req.params;
+  const id = req.params.id;
 
   const editar = toDo.findIndex((el) => el.id === id);
   toDo[editar].message = req.body.message;
@@ -53,8 +53,8 @@ export function edit(req, res) {
 }
 
 export function deletar(req, res) {
-  const { id } = req.params;
+  const id = req.params.id;
   const delet = toDo.findIndex((el) => el.id === id);
-  toDo.splice(delet, 1);
+    toDo.splice(delet, 1);
   res.send('Deletado com sucesso');
 }
