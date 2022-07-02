@@ -4,13 +4,12 @@
         "node": true
     },
     "extends": [
-        "airbnb-base"
+        "standard"
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "rules": {
-      "import/extensions": "off"
     }
 }

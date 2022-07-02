@@ -1,60 +1,43 @@
-import { v4 as uuidv4 } from 'uuid';
+import toDoModel from '../model/toDoModel.js'
 
-const toDo = [
-  {
-    id: uuidv4(),
-    message: 'Exercício to-do',
-  }, {
-    id: uuidv4(),
-    message: 'funcionando',
-  }, {
-    id: uuidv4(),
-    message: 'todos os atributos',
-  }, {
-    id: uuidv4(),
-    message: 'Agora é só me dar o 10',
-  }, {
-    id: uuidv4(),
-    message: ':D',
-  },
-];
+export async function getAll (req, res) {
+  const toDo = await toDoModel.find()
 
-export function getAll(req, res) {
-  res.send(toDo);
+  res.send(toDo)
 }
 
-export function getOne(req, res) {
-  const id = req.params.id;
+export async function getById (req, res) {
+  const id = req.params.id
+  const toDo = await toDoModel.findById(id)
 
-  toDo.forEach((el) => {
-    if (id === el.id) {
-      res.send(el.message);
-    }
-  });
+  res.send(toDo)
 }
 
-export function create(req, res) {
-  const id = uuidv4();
+export async function create (req, res) {
+  const message = req.body
+  await toDoModel.create(message)
 
-  toDo.push({ id, ...req.body });
-  toDo.forEach((el) => {
-    if (id === el.id) {
-      res.send(el);
-    }
-  });
+  res.send('Criado com sucesso')
 }
 
-export function edit(req, res) {
-  const id = req.params.id;
+export async function edit (req, res) {
+  const id = req.params.id
+  const message = req.body
+  const toDo = await toDoModel.findByIdAndUpdate(id, message)
 
-  const editar = toDo.findIndex((el) => el.id === id);
-  toDo[editar].message = req.body.message;
-  res.send(toDo[editar]);
+  if (toDo) {
+    const edited = await toDoModel.findById(id)
+    res.send(edited)
+  }
 }
 
-export function deletar(req, res) {
-  const id = req.params.id;
-  const delet = toDo.findIndex((el) => el.id === id);
-   toDo.splice(delet, 1);
-  res.send('Deletado com sucesso');
+export async function deletar (req, res) {
+  const id = req.params.id
+  const deletado = await toDoModel.findById(id)
+  await toDoModel.findByIdAndDelete(id)
+
+  res.json({
+    message: 'O item abaixo foi deletado com sucesso',
+    deletado
+  })
 }
